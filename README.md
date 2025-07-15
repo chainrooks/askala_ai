@@ -144,10 +144,6 @@ All packages are listed in `requirements.txt`. Some highlights include:
 
 ---
 
-Berikut adalah tambahan keterangan yang bisa kamu sisipkan ke dalam bagian README (misalnya di bawah bagian **📦 Example Request** atau **Frontend Overview**):
-
----
-
 ## 📌 Note on `lesson` Variable in Frontend
 
 In the file `frontend-llm/src/ChatBox.jsx`, the lesson used for the query is currently **hardcoded** as `"for_loops"`:
