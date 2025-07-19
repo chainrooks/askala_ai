@@ -3,9 +3,13 @@
 This project is an educational chatbot application powered by RAG (Retrieval-Augmented Generation), combining:
 
 * **LLM via Groq (`gemma2-9b-it`)**
+<<<<<<< HEAD
 * **Embeddings from Ollama (`nomic-embed-text`)**
 * **FastAPI** as the backend
 * **React + Vite** for the modern frontend
+=======
+* **Embeddings from HuggingFace (`all-MiniLM-L6-v2`)**
+>>>>>>> d939b0ae93741e32774bbb8dc6635f7b162f123f
 * **Streamlit** as an alternative interface (legacy)
 * **Markdown files** as the knowledge base
 
@@ -27,6 +31,7 @@ llm-exercise/
 ├── backend/                   # FastAPI backend source
 │   ├── llm_groq.py            # RAG chain logic
 │   ├── build_faiss_index.py   # Indexes markdown → FAISS
+<<<<<<< HEAD
 │   └── app.py                 # Main FastAPI server
 │
 ├── frontend-llm/              # Frontend built with Vite + React
@@ -37,6 +42,10 @@ llm-exercise/
 │
 ├── legacy_streamlit.py        # Streamlit-based fallback UI
 ├── main.py                    # Alternative FastAPI entrypoint
+=======
+│
+├── legacy_streamlit.py        # Streamlit-based fallback UI
+>>>>>>> d939b0ae93741e32774bbb8dc6635f7b162f123f
 ├── .env                       # Environment variables
 ├── requirements.txt           # Python dependencies
 ```
@@ -47,7 +56,11 @@ llm-exercise/
 
 1. **Preprocessing:**
 
+<<<<<<< HEAD
    * Run `build_faiss_index.py` to embed markdown files into FAISS index using `nomic-embed-text`.
+=======
+   * Run `build_faiss_index.py` to embed markdown files into FAISS index using `all-MiniLM-L6-v2`.
+>>>>>>> d939b0ae93741e32774bbb8dc6635f7b162f123f
 
 2. **Backend:**
 
@@ -61,10 +74,13 @@ llm-exercise/
 
 4. **Frontend:**
 
+<<<<<<< HEAD
    * The React app (`frontend-llm`) sends POST requests to `127.0.0.1:8000/chat`.
 
 5. **Optional:**
 
+=======
+>>>>>>> d939b0ae93741e32774bbb8dc6635f7b162f123f
    * Streamlit UI (`legacy_streamlit.py`) provides a side-by-side learning/chat interface.
 
 ---
@@ -91,6 +107,7 @@ lessons/
 python backend/build_faiss_index.py
 ```
 
+<<<<<<< HEAD
 ### 2. Start FastAPI Server
 
 ```bash
@@ -103,6 +120,12 @@ uvicorn backend.app:app --reload
 cd frontend-llm
 npm install
 npm run dev
+=======
+### 2. Start Frontend (Streamlit)
+
+```bash
+streamlit run legacy_streamlit.py
+>>>>>>> d939b0ae93741e32774bbb8dc6635f7b162f123f
 ```
 
 ---
@@ -113,6 +136,10 @@ Your `.env` file should look like:
 
 ```
 GROQ_API_KEY=your_groq_api_key_here
+<<<<<<< HEAD
+=======
+HF_TOKEN=your_huggingface_api_key_here
+>>>>>>> d939b0ae93741e32774bbb8dc6635f7b162f123f
 ```
 
 ---
@@ -126,12 +153,16 @@ All packages are listed in `requirements.txt`. Some highlights include:
 * `langchain-ollama`
 * `faiss-cpu`
 * `streamlit`
+<<<<<<< HEAD
 * `fastapi`
 * `uvicorn`
+=======
+>>>>>>> d939b0ae93741e32774bbb8dc6635f7b162f123f
 * `ollama`
 * `python-dotenv`
 
 ---
+<<<<<<< HEAD
 
 ## 📌 Example Request (POST /chat)
 
@@ -173,5 +204,10 @@ If you want the user to select which lesson to use dynamically, you can update t
 
 * Embedding model must be consistent across indexing and querying (`nomic-embed-text`)
 * Ollama must be running with the selected embedding model (`ollama run nomic-embed-text`)
+=======
+## ⚠️ Important Notes
+
+* Embedding model must be consistent across indexing and querying (`all-MiniLM-L6-v2`)
+>>>>>>> d939b0ae93741e32774bbb8dc6635f7b162f123f
 * Ensure `lesson` sent from frontend matches the folder name inside `lessons_faiss`
 * If you want to use Ollama directly for LLM (instead of Groq), you can swap out the chain logic accordingly

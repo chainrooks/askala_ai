@@ -9,12 +9,27 @@ from langchain_core.chat_history import BaseChatMessageHistory
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.messages import HumanMessage
+<<<<<<< HEAD
+=======
+from langchain_huggingface import HuggingFaceEmbeddings
+
+>>>>>>> d939b0ae93741e32774bbb8dc6635f7b162f123f
 
 load_dotenv()
 groq_api_key = os.getenv("GROQ_API_KEY")
 
 llm = ChatGroq(model="gemma2-9b-it", groq_api_key=groq_api_key)
+<<<<<<< HEAD
 embeddings = OllamaEmbeddings(model="nomic-embed-text:latest")
+=======
+
+
+os.environ['HF_TOKEN']=os.getenv("HF_TOKEN")
+embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+
+base_dir = os.path.join(os.path.dirname(__file__), "..", "lessons_faiss")
+base_dir = os.path.abspath(base_dir) 
+>>>>>>> d939b0ae93741e32774bbb8dc6635f7b162f123f
 
 store = {}
 
@@ -26,7 +41,11 @@ def get_session_history(session_id: str) -> BaseChatMessageHistory:
 def get_all_messages(x):
     return " ".join(msg.content for msg in x["messages"])
 
+<<<<<<< HEAD
 def build_rag_chain(file_name: str, base_dir: str = r"C:\Users\Administrator\Documents\generative_ai\llm-exercise\lessons_faiss"): 
+=======
+def build_rag_chain(file_name: str): 
+>>>>>>> d939b0ae93741e32774bbb8dc6635f7b162f123f
     path = os.path.join(base_dir, file_name)
     vectorstore = FAISS.load_local(
         folder_path=path,
@@ -37,8 +56,19 @@ def build_rag_chain(file_name: str, base_dir: str = r"C:\Users\Administrator\Doc
     print(f"Vectorstore loaded from: {path}")
 
     prompt = ChatPromptTemplate.from_messages([
+<<<<<<< HEAD
         ("system", "You are a helpful Python tutor. Use the following context to answer the question. Do not answer anything that is not related to the Context. Answer in English language."),
         ("system", "<context>\n{context}\n</context>"),
+=======
+    ("system", """
+    You are a Python programming tutor. Only answer questions if the provided <context> is relevant. 
+    If the question is not related to the context, say "Sorry, I can't only answer questions out of the lessons."
+
+    <context>
+    {context}
+    </context>
+    """),
+>>>>>>> d939b0ae93741e32774bbb8dc6635f7b162f123f
         MessagesPlaceholder(variable_name="messages")
     ])
 

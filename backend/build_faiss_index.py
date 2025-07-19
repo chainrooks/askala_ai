@@ -4,12 +4,22 @@ from langchain_ollama import OllamaEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import UnstructuredMarkdownLoader
+<<<<<<< HEAD
 
 load_dotenv()
 groq_api_key = os.getenv("GROQ_API_KEY")
 path = r'C:\Users\Administrator\Documents\generative_ai\llm-exercise\lessons'
 
 embeddings = OllamaEmbeddings(model="nomic-embed-text:latest")
+=======
+from langchain_huggingface import HuggingFaceEmbeddings
+
+load_dotenv()
+
+
+os.environ['HF_TOKEN']=os.getenv("HF_TOKEN")
+embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+>>>>>>> d939b0ae93741e32774bbb8dc6635f7b162f123f
 
 for file in os.listdir(path):
     loader=UnstructuredMarkdownLoader(os.path.join(path, file))
