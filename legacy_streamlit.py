@@ -1,11 +1,7 @@
 import streamlit as st
 import os
 import re
-<<<<<<< HEAD
-from src.llm_groq import build_rag_chain
-=======
 from backend.llm_groq import build_rag_chain
->>>>>>> d939b0ae93741e32774bbb8dc6635f7b162f123f
 from langchain_core.messages import HumanMessage
 
 # Folder berisi file markdown materi
