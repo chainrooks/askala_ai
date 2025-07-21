@@ -8,6 +8,8 @@ from langchain_huggingface import HuggingFaceEmbeddings
 
 load_dotenv()
 
+path = os.path.join(os.path.dirname(__file__), "..", "lessons")
+path = os.path.abspath(path)
 
 os.environ['HF_TOKEN']=os.getenv("HF_TOKEN")
 embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
