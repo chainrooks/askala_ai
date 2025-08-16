@@ -15,7 +15,7 @@ from langchain_huggingface import HuggingFaceEmbeddings
 load_dotenv()
 groq_api_key = os.getenv("GROQ_API_KEY")
 
-llm = ChatGroq(model="gemma2-9b-it", groq_api_key=groq_api_key)
+llm = ChatGroq(model="openai/gpt-oss-120b", groq_api_key=groq_api_key)
 
 
 os.environ['HF_TOKEN']=os.getenv("HF_TOKEN")
@@ -44,17 +44,34 @@ def build_rag_chain(file_name: str):
 
     print(f"Vectorstore loaded from: {path}")
 
-    prompt = ChatPromptTemplate.from_messages([
-    ("system", """
-    You are a Python programming tutor. Only answer questions if the provided <context> is relevant. 
-    If the question is not related to the context, say "Sorry, I can't only answer questions out of the lessons."
+    prompt = ChatPromptTemplate.from_messages([("system", """
+                                                You are a Python programming tutor. Only answer questions if the provided <context> is relevant. 
+                                                If the question is not related to the context, say "Sorry, I can't answer questions out of the lessons". But if it's related to introductions, that's fine.
+                                                
+                                                Also, respond to the query in the **same language** as the user.
 
-    <context>
-    {context}
-    </context>
-    """),
-        MessagesPlaceholder(variable_name="messages")
-    ])
+                                                Follow these instructions when answering:
+                                                1. Start with <think> on a new line.
+                                                2. Write your internal reasoning (how to solve the problem) inside <think>...</think>. Your reasoning should be at least 500 characters long.
+                                                3. After </think>, provide a clear step-by-step explanation.
+                                                4. End with: Answer = 
+
+                                                Example:
+                                                <think> The user asks in Indonesian what they will learn today. The context is about Python variable naming conventions, including camel case, Pascal case, case sensitivity, and multi-word variable names</think>
+
+                                                Answer = In today's lesson we'll focus on naming variables in Python:
+                                                        Camel case - write the first word in lower‑case and start each subsequent word with a capital letter, e.g. myVariableName.
+                                                        Pascal case - start every word with a capital letter, e.g. MyVariableName.
+                                                        Variable names are case-sensitive - myVar, MyVar, and myvar are three different identifiers.
+                                                        Multi-word variable names should avoid spaces; use either camel case or Pascal case, or separate words with underscores (my_variable_name).
+                                                        These conventions help make your code readable and consistent.
+
+                                                <context>
+                                                {context}
+                                                </context>
+                                                """),
+                                                    MessagesPlaceholder(variable_name="messages")
+                                                ])
 
     # Ambil context dari pertanyaan terakhir
     rag_chain = (

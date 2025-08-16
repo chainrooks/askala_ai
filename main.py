@@ -3,6 +3,18 @@ from pydantic import BaseModel
 from langchain_core.messages import HumanMessage
 from fastapi.middleware.cors import CORSMiddleware
 from backend.llm_groq import build_rag_chain  # pastikan path sesuai
+import re
+
+
+def extract_answer_only(response: str) -> str:
+    
+    pattern = response.split("</think>")[-1]
+    pattern = re.sub(r"(?i)\nAnswer\s*=\s*", "", pattern)
+    pattern = re.sub(r"(?i)\nJawaban\s*=\s*", "", pattern)
+    if pattern:
+        return pattern
+    
+    return response.strip()
 
 app = FastAPI()
 
@@ -38,4 +50,8 @@ def chat(input: ChatInput):
         config=config
     )
 
-    return {"response": response.content}
+    bot_response = response.content
+
+    pure_answer = extract_answer_only(bot_response)
+
+    return {"response": pure_answer}
